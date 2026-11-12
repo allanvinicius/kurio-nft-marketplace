@@ -1,0 +1,9 @@
+node_modules
+dist
+test-results
+playwright-report
+lighthouse/reports/tmp
+.env.local
+*.log
+
+.env*

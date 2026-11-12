@@ -1,0 +1,253 @@
+{
+  "env": {
+    "date": "2026-11-12T12:16:34.112Z",
+    "lighthouse": "13.6.0",
+    "chrome": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+    "node": "v24.22.1",
+    "os": "Windows_NT 10.0.19045 (x64)",
+    "cpus": 6,
+    "baseUrl": "http://localhost:4187",
+    "runsPerPage": 3,
+    "conditions": "Build otimizado (vite build) servido por vite preview; MSW ativo no cenário padrão; perfil Chrome novo por medição (Service Worker instalado a frio); throttling simulado."
+  },
+  "targets": {
+    "performance": 90,
+    "accessibility": 95,
+    "best-practices": 95,
+    "seo": 90
+  },
+  "results": [
+    {
+      "page": "inicio",
+      "url": "/",
+      "profile": "mobile",
+      "median": {
+        "performance": 81,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 3478,
+      "cls": 0.028,
+      "tbtMs": 240,
+      "runs": [
+        {
+          "scores": {
+            "performance": 81,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "lcp": 3478.1516,
+          "cls": 0,
+          "tbt": 253,
+          "fcp": 2942.4344,
+          "lighthouseVersion": "13.6.0",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36"
+        },
+        {
+          "scores": {
+            "performance": 81,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "lcp": 3439.0517,
+          "cls": 0.02849120933858891,
+          "tbt": 240,
+          "fcp": 2922.3678,
+          "lighthouseVersion": "13.6.0",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36"
+        },
+        {
+          "scores": {
+            "performance": 82,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "lcp": 3557.9363000000003,
+          "cls": 0.02849120933858891,
+          "tbt": 205,
+          "fcp": 2976.6242,
+          "lighthouseVersion": "13.6.0",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36"
+        }
+      ]
+    },
+    {
+      "page": "inicio",
+      "url": "/",
+      "profile": "desktop",
+      "median": {
+        "performance": 97,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 1045,
+      "cls": 0.002,
+      "tbtMs": 0,
+      "runs": [
+        {
+          "scores": {
+            "performance": 89,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "lcp": 1723.1207,
+          "cls": 0.001676628347215992,
+          "tbt": 0,
+          "fcp": 1294.4137999999998,
+          "lighthouseVersion": "13.6.0",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36"
+        },
+        {
+          "scores": {
+            "performance": 98,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "lcp": 930.8204000000001,
+          "cls": 0.001676628347215992,
+          "tbt": 0,
+          "fcp": 804.2136,
+          "lighthouseVersion": "13.6.0",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36"
+        },
+        {
+          "scores": {
+            "performance": 97,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "lcp": 1044.6639,
+          "cls": 0.001676628347215992,
+          "tbt": 0,
+          "fcp": 881.4426,
+          "lighthouseVersion": "13.6.0",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36"
+        }
+      ]
+    },
+    {
+      "page": "detalhe",
+      "url": "/nft/emerald-ape-042",
+      "profile": "mobile",
+      "median": {
+        "performance": 87,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 3327,
+      "cls": 0.039,
+      "tbtMs": 247,
+      "runs": [
+        {
+          "scores": {
+            "performance": 87,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "lcp": 3342.2719000000006,
+          "cls": 0.03888213851761846,
+          "tbt": 247,
+          "fcp": 812.3634,
+          "lighthouseVersion": "13.6.0",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36"
+        },
+        {
+          "scores": {
+            "performance": 88,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "lcp": 3325.8693000000007,
+          "cls": 0.03888213851761846,
+          "tbt": 231,
+          "fcp": 802.6231,
+          "lighthouseVersion": "13.6.0",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36"
+        },
+        {
+          "scores": {
+            "performance": 86,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "lcp": 3327.4689999999996,
+          "cls": 0.03888213851761846,
+          "tbt": 293,
+          "fcp": 805.8230000000001,
+          "lighthouseVersion": "13.6.0",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36"
+        }
+      ]
+    },
+    {
+      "page": "detalhe",
+      "url": "/nft/emerald-ape-042",
+      "profile": "desktop",
+      "median": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 885,
+      "cls": 0,
+      "tbtMs": 0,
+      "runs": [
+        {
+          "scores": {
+            "performance": 99,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "lcp": 874.4839999999999,
+          "cls": 0.0001913080499721989,
+          "tbt": 0,
+          "fcp": 246.42399999999998,
+          "lighthouseVersion": "13.6.0",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36"
+        },
+        {
+          "scores": {
+            "performance": 99,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "lcp": 885.3846499999999,
+          "cls": 0.0001913080499721989,
+          "tbt": 0,
+          "fcp": 250.10989999999998,
+          "lighthouseVersion": "13.6.0",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36"
+        },
+        {
+          "scores": {
+            "performance": 99,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "lcp": 902.0173500000001,
+          "cls": 0.0001913080499721989,
+          "tbt": 0,
+          "fcp": 254.8621,
+          "lighthouseVersion": "13.6.0",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36"
+        }
+      ]
+    }
+  ]
+}

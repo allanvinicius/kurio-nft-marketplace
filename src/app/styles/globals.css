@@ -1,0 +1,140 @@
+@import 'tailwindcss';
+
+/*
+ * Tokens extraídos dos frames do Figma (amostragem de pixels dos PNGs 2x).
+ * Ver DESIGN_SPEC.md para a origem de cada valor.
+ */
+@theme {
+  --font-mono: 'Roboto Mono Variable', 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans: var(--font-mono);
+
+  --color-bg: #140d0a;
+  --color-surface: #241612;
+  --color-surface-2: #2e1c16;
+  --color-band: #38220f;
+  --color-line: #3f2319;
+  --color-line-strong: #8a5b33;
+  --color-accent: #d28a4c;
+  --color-accent-strong: #e89b55;
+  --color-accent-hover: #df9759;
+  --color-fg: #f5f1eb;
+  --color-cream: #fdf2da;
+  --color-muted: #cfb28c;
+  --color-subtle: #b39463;
+  --color-dim: #a48b6d;
+  --color-required: #ef7a52;
+  --color-danger: #ff9b87;
+  --color-danger-bg: #3a1712;
+  --color-success: #9fd8a8;
+  --color-success-bg: #15281a;
+  --color-info-bg: #2b1d12;
+
+  --radius-card: 8px;
+  --radius-art: 16px;
+  --radius-hero: 24px;
+
+  --container-site: 1200px;
+
+  --animate-shimmer: shimmer 1.6s linear infinite;
+
+  @keyframes shimmer {
+    0% { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-bg text-fg font-mono antialiased;
+    min-height: 100dvh;
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-bg);
+  }
+  :where(button, a[href]):not(:disabled, [aria-disabled='true']) {
+    cursor: pointer;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent-strong);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  /* Campos usam anel próprio (borda accent), mas mantêm outline para teclado. */
+  input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline-offset: 0;
+  }
+  img {
+    max-width: 100%;
+  }
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: calc(var(--container-site) + 2rem);
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 1280px) {
+    .container-site {
+      max-width: var(--container-site);
+      padding-inline: 0;
+    }
+  }
+
+  .skeleton {
+    position: relative;
+    overflow: hidden;
+    background-color: #2a1a15;
+    background-image: linear-gradient(90deg, #2a1a15 0px, #3b261d 120px, #2a1a15 240px);
+    background-size: 800px 100%;
+    background-repeat: no-repeat;
+    animation: var(--animate-shimmer);
+  }
+
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .skeleton {
+    animation: none;
+    background-image: none;
+  }
+}
