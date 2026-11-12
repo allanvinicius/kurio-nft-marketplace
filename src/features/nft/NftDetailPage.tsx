@@ -313,8 +313,8 @@ function NftDetailView({ nft }: { nft: NftDetail }) {
       <div className="fixed inset-x-0 bottom-0 z-30 rounded-t-[28px] bg-surface px-6 pb-5 pt-4 shadow-[0_-12px_30px_rgba(0,0,0,0.45)] md:hidden">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-[16px] text-fg">Qtd.</span>
-            <QuantityStepper value={qty} max={Math.max(1, limit)} onChange={setQty} label={nft.name} size="sm" disabled={soldOut || limit === 0} />
+            <span className="text-[18px] text-muted">Qtd.</span>
+            <QuantityStepper value={qty} max={Math.max(1, limit)} onChange={setQty} label={nft.name} size="compact" disabled={soldOut || limit === 0} />
           </div>
           <p className="text-[22px] font-bold text-accent-strong">{edition ? formatEth(edition.price) : formatEth(nft.price)}</p>
         </div>

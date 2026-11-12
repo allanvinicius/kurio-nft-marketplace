@@ -17,9 +17,14 @@ test.describe('Compra completa', () => {
     await login(page, 'ana')
     await expect(page).toHaveURL(/\/checkout$/)
 
-    // Carteira: conectar
-    await page.getByRole('button', { name: 'Conectar carteira' }).click()
-    await expect(page.getByTestId('wallet-connection')).toContainText('Conectada')
+    // No mobile, a confirmação conecta a carteira antes de abrir a revisão.
+    if (isMobile) {
+      await expect(page.getByTestId('wallet-connection')).toBeHidden()
+      await expect(page.getByRole('heading', { name: 'Perfil do colecionador', includeHidden: true })).toBeHidden()
+    } else {
+      await page.getByRole('button', { name: 'Conectar carteira' }).click()
+      await expect(page.getByTestId('wallet-connection')).toContainText('Conectada')
+    }
     await page.getByTestId('confirm-purchase').click()
     const dialog = page.getByRole('dialog', { name: 'Revise sua compra' })
     await expect(dialog).toBeVisible()

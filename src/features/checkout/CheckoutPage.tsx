@@ -183,8 +183,14 @@ function CheckoutForm({ userId, wallets, defaults }: { userId: string; wallets: 
       const connection = await walletApi.connect({ walletId: wallet.id, provider, network })
       setConn({ status: 'connected', connection })
       toast.success(`${PROVIDERS.find((p) => p.id === provider)?.label} conectada`, { description: `${shortAddress(connection.address)} na rede ${NETWORKS.find((n) => n.id === network)?.label}.` })
+      return true
     } catch (e) {
-      setConn({ status: 'rejected', message: errorMessage(e) })
+      const message = errorMessage(e)
+      setConn({ status: 'rejected', message })
+      if (window.matchMedia('(width < 48rem)').matches) {
+        toast.error('Não foi possível conectar a carteira', { description: message })
+      }
+      return false
     }
   }
   const disconnect = async () => {
@@ -220,13 +226,15 @@ function CheckoutForm({ userId, wallets, defaults }: { userId: string; wallets: 
   }, [userId, navigate, submission])
 
   const openReview = handleSubmit(async () => {
-    if (conn.status !== 'connected') {
+    const mobile = window.matchMedia('(width < 48rem)').matches
+    if (conn.status !== 'connected' && !mobile) {
       toast.error('Conecte sua carteira', { description: 'Selecione a carteira e a rede e clique em “Conectar carteira”.' })
       document.getElementById('wallet-connect-section')?.focus()
       return
     }
     setReviewing(true)
     try {
+      if (conn.status !== 'connected' && !(await connect())) return
       // Revalida preço, disponibilidade, cupom e taxas com a API antes de confirmar.
       const fresh = await quoteApi.create({ network })
       qc.setQueryData(qk.quote({ kind: 'user', id: userId }, fresh.cartVersion, network), fresh)
@@ -299,8 +307,8 @@ function CheckoutForm({ userId, wallets, defaults }: { userId: string; wallets: 
 
   return (
     <div className="md:pt-8">
-      <MobileTopBar title="Pagamento com carteira" align="left" />
-      <div className="container-site">
+      <MobileTopBar title="Pagamento com carteira" align="left" className="px-7" />
+      <div className="container-site max-md:px-7">
         <Breadcrumbs items={[{ label: 'Início', to: '/' }, { label: 'Mercado', to: '/', hash: 'catalogo' }, { label: 'Pagamento' }]} />
         <h1 className="sr-only">Pagamento</h1>
 
@@ -320,7 +328,7 @@ function CheckoutForm({ userId, wallets, defaults }: { userId: string; wallets: 
           </div>
         ) : null}
 
-        <form noValidate onSubmit={openReview} className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)] xl:grid-cols-[763px_1fr] lg:gap-8" aria-describedby="checkout-help">
+        <form noValidate onSubmit={openReview} className="mt-8 grid gap-10 max-md:mt-3 max-md:gap-3 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)] xl:grid-cols-[763px_1fr] lg:gap-8" aria-describedby="checkout-help">
           <p id="checkout-help" className="sr-only">
             Campos marcados com asterisco são obrigatórios. Após preencher, revise a cotação antes de confirmar a compra.
           </p>
@@ -338,7 +346,20 @@ function CheckoutForm({ userId, wallets, defaults }: { userId: string; wallets: 
             <div role="radiogroup" aria-labelledby="m-wallets" className="mt-4 flex flex-col gap-4">
               {[...wallets].sort((a) => (a.role === 'secondary' ? -1 : 1)).map((w) => (
                 <label key={w.id} className={cn('flex cursor-pointer items-center gap-4 rounded-[18px] bg-surface p-5', w.id === walletId && 'ring-1 ring-accent/70')}>
-                  <input type="radio" name="m-wallet" className="size-5 accent-[#d28a4c]" checked={w.id === walletId} onChange={() => setValue('walletId', w.id, { shouldDirty: true })} />
+                  <input
+                    type="radio"
+                    name="m-wallet"
+                    className="size-5 accent-[#d28a4c]"
+                    checked={w.id === walletId}
+                    onChange={() => {
+                      setValue('walletId', w.id, { shouldDirty: true })
+                      setValue('network', w.network)
+                      setValue('provider', w.provider)
+                      setValue('profileName', w.profileName)
+                      setValue('secondaryAddress', w.secondaryAddress ?? '')
+                      setValue('referralCode', w.referralCode)
+                    }}
+                  />
                   <span className="flex-1">
                     <span className="block text-[17px] font-bold">{w.nickname}</span>
                     <span className="block text-[15px] text-muted">{w.secondaryAddress && w.role === 'secondary' ? w.secondaryAddress : shortAddress(w.address)}</span>
@@ -353,7 +374,7 @@ function CheckoutForm({ userId, wallets, defaults }: { userId: string; wallets: 
           </section>
 
           {/* Dados do colecionador */}
-          <section aria-labelledby="collector-title" className="order-3 lg:order-1">
+          <section aria-labelledby="collector-title" className="order-3 hidden md:block lg:order-1">
             <h2 id="collector-title" className="text-[18px] font-bold">
               Perfil do colecionador
             </h2>
@@ -525,7 +546,7 @@ function CheckoutForm({ userId, wallets, defaults }: { userId: string; wallets: 
               <QuoteTotals quote={quote.data} loading={quote.isPending} className="mt-3" updating={quote.isFetching && !quote.isPending} />
             </div>
 
-            <section id="wallet-connect-section" tabIndex={-1} aria-labelledby="wallet-network" className="mt-6 outline-none">
+            <section id="wallet-connect-section" tabIndex={-1} aria-labelledby="wallet-network" className="outline-none md:mt-6">
               <h2 id="wallet-network" className="text-[18px] font-bold md:text-center">
                 Carteira e rede
               </h2>
@@ -556,7 +577,7 @@ function CheckoutForm({ userId, wallets, defaults }: { userId: string; wallets: 
                 </p>
               ) : null}
 
-              <div className="mt-4 rounded-[6px] border border-line bg-surface p-4 text-[14px]" aria-live="polite" data-testid="wallet-connection">
+              <div className="mt-4 hidden rounded-[6px] border border-line bg-surface p-4 text-[14px] md:block" aria-live="polite" data-testid="wallet-connection">
                 {conn.status === 'connected' ? (
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <p className="flex items-center gap-2 text-success">
@@ -582,15 +603,15 @@ function CheckoutForm({ userId, wallets, defaults }: { userId: string; wallets: 
               </div>
             </section>
 
-            <p className="mt-6 flex items-baseline justify-end gap-6 text-[20px] md:hidden">
+            <p className="mt-3 flex items-baseline justify-end gap-6 text-[18px] md:hidden">
               <span className="font-bold">Total:</span>
               <span className="font-bold text-accent-strong">{totalLabel}</span>
             </p>
-            <p className="mt-2 flex items-center justify-end gap-1.5 text-[12px] text-dim" aria-live="polite">
+            <p className="mt-2 hidden items-center justify-end gap-1.5 text-[12px] text-dim md:flex" aria-live="polite">
               <span aria-hidden className={cn('size-2 rounded-full', realtime === 'connected' ? 'bg-success' : 'bg-danger')} />
               Tempo real: {realtime === 'connected' ? 'conectado' : realtime === 'reconnecting' ? 'reconectando…' : realtime}
             </p>
-            <Button type="submit" className="mt-4 h-[45px] w-full text-[16px] max-md:fixed max-md:inset-x-5 max-md:bottom-5 max-md:z-30 max-md:h-[56px] max-md:w-auto max-md:rounded-full max-md:bg-gradient-to-r max-md:from-accent max-md:to-[#c27c43] max-md:text-[18px]" loading={reviewing} disabled={busy || !quote.data?.purchasable} data-testid="confirm-purchase">
+            <Button type="submit" className="mt-4 h-[45px] w-full text-[16px] max-md:fixed max-md:inset-x-7 max-md:bottom-[max(2rem,env(safe-area-inset-bottom))] max-md:z-30 max-md:h-[58px] max-md:w-auto max-md:rounded-full max-md:bg-gradient-to-r max-md:from-accent max-md:to-[#c27c43]" loading={reviewing} disabled={busy || !quote.data?.purchasable} data-testid="confirm-purchase">
               Confirmar compra
             </Button>
             {quote.data && !quote.data.purchasable ? (

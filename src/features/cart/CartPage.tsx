@@ -197,7 +197,7 @@ function CartRow({ item, quote }: { item: CartItem; quote: Quote | undefined }) 
       <td className="text-[16px] font-bold text-muted">{formatEth(item.unitPrice)}</td>
       <td>
         <div className="flex flex-col items-start gap-1">
-          <QuantityStepper value={item.quantity} max={max} onChange={setQty} label={item.name} size="sm" />
+          <QuantityStepper value={item.quantity} max={max} onChange={setQty} label={item.name} size="compact" />
           {over && item.available > 0 ? (
             <button type="button" className="text-[12px] text-accent-strong underline" onClick={() => setQty(item.available)}>
               Ajustar para {item.available}
@@ -233,7 +233,7 @@ function MobileCartItem({ item }: { item: CartItem }) {
         <ItemNotices item={item} />
         <div className="mt-auto flex items-center justify-between gap-2 pt-2">
           <p className="text-[20px] font-bold text-accent-strong">{formatEth(item.unitPrice)}</p>
-          <QuantityStepper value={item.quantity} max={max} onChange={setQty} label={item.name} size="sm" variant="ghost" />
+          <QuantityStepper value={item.quantity} max={max} onChange={setQty} label={item.name} size="compact" />
         </div>
       </div>
     </li>

@@ -2,7 +2,7 @@ import { test, expect, openApp, reachCheckout, mockApi } from '../helpers/app'
 
 test.describe('Tempo real (Socket.IO) durante o checkout', () => {
   test('preço alterado: aviso, resumo atualizado e cotação desatualizada bloqueada @mobile', async ({ page, isMobile }) => {
-    await reachCheckout(page)
+    await reachCheckout(page, { connect: !isMobile })
     await page.getByTestId('confirm-purchase').click()
     const dialog = page.getByRole('dialog', { name: 'Revise sua compra' })
     await expect(dialog.getByTestId('quote-total')).toHaveText('1.206 ETH')

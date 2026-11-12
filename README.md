@@ -21,7 +21,7 @@ Aplicação React + TypeScript com descoberta (catálogo/detalhe), compra (carri
 | E2E + regressão visual | Playwright 1.63 | `tests/`, `playwright.config.ts` |
 | Auditoria | Lighthouse 13 | `lighthouse/` |
 
-> Documentação complementar: [ARCHITECTURE.md](ARCHITECTURE.md) · [DESIGN_SPEC.md](DESIGN_SPEC.md) · [ASSETS_MANIFEST.md](ASSETS_MANIFEST.md) · [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md) · [docs/REST_API.md](docs/REST_API.md) · [docs/SOCKET_EVENTS.md](docs/SOCKET_EVENTS.md) · [docs/TEST_SCENARIOS.md](docs/TEST_SCENARIOS.md)
+> Documentação complementar: [ARCHITECTURE.md](ARCHITECTURE.md) · [DESIGN_SPEC.md](DESIGN_SPEC.md) · [ASSETS_MANIFEST.md](ASSETS_MANIFEST.md) · [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md) · [docs/REST_API.md](docs/REST_API.md) · [docs/SOCKET_EVENTS.md](docs/SOCKET_EVENTS.md) · [docs/TEST_SCENARIOS.md](docs/TEST_SCENARIOS.md) · [Processo de desenvolvimento](docs/PROCESSO_DE_DESENVOLVIMENTO.md)
 
 ---
 

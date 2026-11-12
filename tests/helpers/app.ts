@@ -41,12 +41,13 @@ export async function realtimeStats(page: Page) {
   return page.evaluate(() => ({ ...(window as unknown as { __kurioRealtime: { stats: { received: number; applied: number; ignoredDuplicate: number; ignoredStale: number; ignoredForeign: number } } }).__kurioRealtime.stats }))
 }
 
-/** Faz login, coloca itens no carrinho e chega ao checkout com a carteira conectada. */
-export async function reachCheckout(page: Page, opts: { user?: keyof typeof USERS; scenario?: string; items?: Array<{ id: string; quantity?: number }> } = {}) {
+/** Faz login, coloca itens no carrinho e conecta a carteira quando solicitado. */
+export async function reachCheckout(page: Page, opts: { user?: keyof typeof USERS; scenario?: string; items?: Array<{ id: string; quantity?: number }>; connect?: boolean } = {}) {
   await openApp(page, '/login', opts.scenario ?? 'fast')
   await login(page, opts.user ?? 'ana')
   for (const it of opts.items ?? [{ id: 'emerald-ape-042' }]) await addToCart(page, it.id, { quantity: it.quantity })
   await page.goto('/checkout')
+  if (opts.connect === false) return
   await page.getByRole('button', { name: 'Conectar carteira' }).click()
   await expect(page.getByTestId('wallet-connection')).toContainText('Conectada')
 }
