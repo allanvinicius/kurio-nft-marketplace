@@ -1,6 +1,7 @@
 import { createRootRouteWithContext, createRoute, createRouter, lazyRouteComponent, redirect, type ParsedLocation } from '@tanstack/react-router'
 import type { QueryClient } from '@tanstack/react-query'
 import { RootLayout } from '@/components/layout/RootLayout'
+import { RouteSkeleton } from '@/components/layout/RouteSkeleton'
 import { NotFoundPage } from '@/components/shared/NotFoundPage'
 import { RouteErrorPage } from '@/components/shared/RouteErrorPage'
 import { HomeRoutePage } from '@/features/catalog/HomePage'
@@ -139,6 +140,9 @@ export function createAppRouter(queryClient: QueryClient) {
     context: { queryClient },
     defaultPreload: 'intent',
     defaultPreloadStaleTime: 0,
+    defaultPendingComponent: RouteSkeleton,
+    defaultPendingMs: 200,
+    defaultPendingMinMs: 0,
     scrollRestoration: true,
     defaultErrorComponent: RouteErrorPage,
     defaultNotFoundComponent: () => <NotFoundPage />,

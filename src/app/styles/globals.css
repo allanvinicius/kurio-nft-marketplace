@@ -124,6 +124,14 @@
   }
 }
 
+/* Fora das camadas para prevalecer sobre as classes de fonte do Tailwind.
+ * O Safari no iOS amplia a página ao focar campos com fonte menor que 16px. */
+@media (width < 48rem), (pointer: coarse) {
+  :where(input:not([type]), input:is([type='text'], [type='search'], [type='email'], [type='password'], [type='tel'], [type='url'], [type='number']), textarea, select) {
+    font-size: max(16px, 1rem);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

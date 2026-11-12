@@ -4,6 +4,7 @@ import { Link, useNavigate, useRouterState } from '@tanstack/react-router'
 import { Heart, LogIn, LogOut, Search, ShoppingCart, UserRound, Wallet } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { useCartCount } from '@/features/cart/queries'
 import { useLogout, useSession } from '@/features/auth/session'
@@ -80,6 +81,10 @@ function AccountArea() {
   const logout = useLogout()
   const navigate = useNavigate()
 
+  if (session.status === 'loading') {
+    return <div role="group" aria-label="Carregando conta" aria-busy="true"><Skeleton className="h-[35px] w-[100px]" /></div>
+  }
+
   if (session.status === 'guest') {
     const redirect = pathname === '/login' || pathname === '/register' ? undefined : href
     return (
@@ -99,7 +104,7 @@ function AccountArea() {
       <DropdownMenuTrigger className="flex h-[35px] items-center gap-2 rounded-[4px] border border-accent px-2 text-sm text-fg hover:bg-accent/10" aria-label={`Menu da conta de ${name}`}>
         {avatar ? <img src={avatar} alt="" className="size-6 rounded-full object-cover" /> : <UserRound className="size-5 text-accent-strong" aria-hidden />}
         <span className="max-w-[9rem] truncate" data-testid="account-name">
-          {session.status === 'loading' ? 'Carregando…' : name}
+          {name}
         </span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

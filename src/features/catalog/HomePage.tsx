@@ -9,6 +9,7 @@ import { Dialog, SheetContent, DialogTitle, DialogDescription } from '@/componen
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { EmptyState, ErrorState, BackgroundUpdating } from '@/components/shared/states'
 import { NftImage } from '@/components/shared/NftImage'
+import { LoadingImage } from '@/components/shared/LoadingImage'
 import { cn } from '@/lib/utils/cn'
 import { errorMessage } from '@/lib/api/client'
 import { catalogQueryOptions, featuredQueryOptions } from './queries'
@@ -149,7 +150,7 @@ function HeroArtwork({ index, desktop }: { index: number; desktop: boolean }) {
       desktop ? 'aspect-square w-full self-center rounded-[24px]' : 'size-[120px] rounded-[14px] min-[400px]:size-[136px]',
     )}>
       {HERO_SLIDES.map((slide, i) => (
-        <img
+        <LoadingImage
           key={slide.nftId}
           src={`${slide.image}-${desktop ? 960 : 240}.webp`}
           srcSet={`${slide.image}-240.webp 240w, ${slide.image}-480.webp 480w${desktop ? `, ${slide.image}-960.webp 960w` : ''}`}
@@ -263,7 +264,7 @@ function Catalog({ search, filtersOpen, setFiltersOpen }: { search: CatalogSearc
           <div className="bg-surface">
             <CatalogFilters search={search} facets={facets} />
           </div>
-          <SpotlightCard nft={featured.data?.spotlight} />
+          {(featured.isPending || featured.data?.spotlight) && <SpotlightCard nft={featured.data?.spotlight} />}
         </aside>
 
         <div>

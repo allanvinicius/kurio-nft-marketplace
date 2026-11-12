@@ -22,4 +22,8 @@ async function bootstrap() {
   mountApp(document.getElementById('root')!)
 }
 
-void bootstrap()
+void bootstrap().catch((error: unknown) => {
+  console.error('Falha ao iniciar a KURIO', error)
+  document.getElementById('app-loading')?.remove()
+  document.getElementById('app-load-error')?.removeAttribute('hidden')
+})

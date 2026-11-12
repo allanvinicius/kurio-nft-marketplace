@@ -1,6 +1,7 @@
 import type { NftImage as NftImageData } from '@/types/api'
 import { imageSrc, imageSrcSet } from '@/lib/utils/image'
 import { cn } from '@/lib/utils/cn'
+import { LoadingImage } from './LoadingImage'
 
 /**
  * Imagem responsiva de NFT: srcset WebP (240/480/960), dimensões intrínsecas
@@ -22,7 +23,7 @@ export function NftImage({
   width?: number
 }) {
   return (
-    <img
+    <LoadingImage
       src={imageSrc(image, 480)}
       srcSet={imageSrcSet(image)}
       sizes={sizes}

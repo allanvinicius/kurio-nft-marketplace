@@ -9,6 +9,25 @@ test.describe('Carregamento lento, falhas e recuperação', () => {
     await setScenario(page, 'fast')
   })
 
+  test('skeleton do destaque desaparece quando a imagem chega @mobile', async ({ page }) => {
+    let releaseImage!: () => void
+    const imageDelay = new Promise<void>((resolve) => { releaseImage = resolve })
+    await page.route('**/assets/nfts/emerald-ape-1-*.webp', async (route) => {
+      await imageDelay
+      await route.continue()
+    })
+
+    await page.goto('/?scenario=fast', { waitUntil: 'domcontentloaded' })
+    const artwork = page.getByRole('link', { name: 'Ver Emerald Ape #042', exact: true }).locator('img').first()
+    try {
+      await expect(artwork).toHaveClass(/\bskeleton\b/)
+    } finally {
+      releaseImage()
+    }
+    await expect(artwork).not.toHaveClass(/\bskeleton\b/)
+    await expect.poll(() => artwork.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0)
+  })
+
   test('erro 5xx mostra feedback e "Tentar novamente" recupera', async ({ page }) => {
     await openApp(page, '/', 'catalog-error')
     await expect(page.getByRole('alert').filter({ hasText: 'temporariamente indisponível' })).toBeVisible({ timeout: 15_000 })

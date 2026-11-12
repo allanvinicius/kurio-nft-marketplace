@@ -19,6 +19,7 @@ export function sessionQueryOptions(token: string | null) {
 export type SessionState =
   | { status: 'guest'; user: null; token: null }
   | { status: 'loading'; user: null; token: string; userId: string }
+  | { status: 'unverified'; user: null; token: string; userId: string }
   | { status: 'authenticated'; user: User; token: string; userId: string }
 
 /** Estado da sessão: token local + validação na API (recuperável após refresh). */
@@ -27,7 +28,7 @@ export function useSession(): SessionState {
   const query = useQuery(sessionQueryOptions(stored?.token ?? null))
   if (!stored) return { status: 'guest', user: null, token: null }
   if (query.data) return { status: 'authenticated', user: query.data.user, token: stored.token, userId: stored.userId }
-  return { status: 'loading', user: null, token: stored.token, userId: stored.userId }
+  return { status: query.isError ? 'unverified' : 'loading', user: null, token: stored.token, userId: stored.userId }
 }
 
 /**
